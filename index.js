@@ -1,7 +1,8 @@
 const express = require('express'); // to use express module require express
 const app = express(); // now app contain all the functionalities of express
 const port = 8000; // define the port
-const expressLayouts = require('express-ejs-layouts'); // require express-ejs-layouts for using layouts
+const expressLayouts = require('express-ejs-layouts'); // require express-ejs-layouts for using layouts\
+const db = require('./config/mongoose'); // requiring the config b/w mongo and mongodb
 
 //setting up the view engine
 app.set('view engine', 'ejs'); // defining the view engine
