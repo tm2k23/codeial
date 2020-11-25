@@ -39,7 +39,8 @@ module.exports.create = function(req, res) {
                 return res.redirect('/user/sign-in'); // redirect to signin page when the user is created
             });
         } else {
-            console.log('User already exists');
+            // redirect back to the signup page if the user already exists
+            console.log(`User ${user.email} already exists`);
             return res.redirect('back');
         }
     });
