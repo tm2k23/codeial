@@ -2,9 +2,29 @@ const { response } = require('express');
 const User = require('../models/user.js'); // import the user model
 
 module.exports.profile = function(req, res) {
-    return res.render('profile.ejs', {
-        title: "Profile"
-    });
+    if (req.cookies.user_id) {
+        // if user_id cookies exist
+        User.findById(req.cookies.user_id, function(err, user) { // find the user by id
+
+            // if user is found
+            if (user) {
+                return res.render('user_profile', {
+                    title: user.eventNames,
+                    name: user.name,
+                    email: user.email,
+                    password: user.password
+                })
+            }
+
+            // if user is not found redirect to the sign-in page
+            else
+                return res.redirect('/user/sign-in');
+        })
+    }
+
+    // if user_id cookies does not exist
+    else
+        return res.redirect('/user/sign-in');
 }
 
 module.exports.signUp = function(req, res) {
