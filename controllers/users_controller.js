@@ -47,6 +47,24 @@ module.exports.create = function(req, res) {
 
 module.exports.createSession = function(req, res) {
     // to start the sign in  session
-    // todo later
-    return res.end('Session created');
+
+    // find the user 
+    User.findOne({ email: req.body.email }, function(err, user) {
+        if (err) { console.log('Error in seraching the signup email in database ', err); } // if there is error
+
+        // handle user found 
+        if (user) {
+            // handle passwords which do not match, send it back to the signin page
+            if (user.password != req.body.password)
+                return res.redirect('back');
+
+            // handle session creation
+            res.cookie('user_id', user.id); // creat cookie
+            return res.redirect('/user/profile'); // redirect to the users profile page
+        }
+
+        // handle user not found., send it back to the signin page
+        else
+            return res.redirect('back');
+    });
 }
