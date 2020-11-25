@@ -3,6 +3,7 @@ const app = express(); // now app contain all the functionalities of express
 const port = 8000; // define the port
 const expressLayouts = require('express-ejs-layouts'); // require express-ejs-layouts for using layouts\
 const db = require('./config/mongoose'); // requiring the config b/w mongo and mongodb
+const cookieParser = require('cookie-parser'); // require cookie parser
 
 //setting up the view engine
 app.set('view engine', 'ejs'); // defining the view engine
@@ -14,7 +15,8 @@ app.set('layout extractScripts', true);
 
 app.use(expressLayouts); // middleware for express layouts 
 app.use(express.static('./assets')); // middleware for static files
-
+app.use(express.urlencoded()); // url parser
+app.use(cookieParser()); // middleware for parsing cookies
 app.use('/', require('./routes/index')); // defining the router
 
 // listening to the port 8000
