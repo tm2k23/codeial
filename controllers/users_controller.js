@@ -87,4 +87,11 @@ module.exports.createSession = function(req, res) {
         else
             return res.redirect('back');
     });
-}
+};
+
+module.exports.endSession = function(req, res) {
+    // to end the session , this is the controller for /user/end-session
+
+    res.cookie('user_id', ""); // remove the cookie 
+    return res.redirect('/user/sign-in'); // redirect to the sign in page 
+};

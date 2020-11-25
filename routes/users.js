@@ -17,5 +17,6 @@ router.get('/sign-up', usersController.signUp); // for sign up page
 router.get('/sign-in', usersController.signIn); // for sign in page
 router.post('/create', usersController.create); // for adding user to the database action route of signup form
 router.post('/create-session', usersController.createSession); // action route for sign in form
+router.post('/end-session', usersController.endSession); // action route for signing out form
 
 module.exports = router; // export is used in index.js router file
