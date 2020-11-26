@@ -17,6 +17,7 @@ router.get('/profile', passport.checkAuthentication, usersController.profile); /
 router.get('/sign-up', usersController.signUp); // for sign up page
 router.get('/sign-in', usersController.signIn); // for sign in page
 router.post('/create', usersController.create); // for adding user to the database action route of signup form
+router.get('/sign-out', usersController.destroySession); // for ending the session of the loggedin user
 
 // action route for sign in form 
 // authenticate using passport-local strategy

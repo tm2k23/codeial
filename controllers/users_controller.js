@@ -59,3 +59,9 @@ module.exports.createSession = function(req, res) {
     // to start the sign in  session
     return res.redirect('/user/profile');
 }
+
+module.exports.destroySession = function(req, res) {
+    // for signout 
+    req.logout();
+    return res.redirect('/');
+}
