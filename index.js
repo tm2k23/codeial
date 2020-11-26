@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser'); // require cookie parser
 const session = require('express-session'); // require express session
 const passport = require('passport'); // require passport
 const passportLocal = require('./config/passport-local-strategy');
+const MongoStore = require('connect-mongo')(session); // require connecct mongo for session cookies , it takes argument about what to store
 
 //setting up the view engine
 app.set('view engine', 'ejs'); // defining the view engine
@@ -28,7 +29,14 @@ app.use(session({ // middleware for cookie encryption
     resave: false,
     cookie: {
         maxAge: (1000 * 60 * 100)
-    }
+    },
+    // mongostore is used to store the session cookies in the db
+    store: new MongoStore({
+        mongooseConnection: db,
+        autoRemove: 'disabled'
+    }, function(err) { // callback function 
+        console.log(err || 'connect mongodb setup ok')
+    })
 }));
 // now tell app to use passport
 app.use(passport.initialize());
