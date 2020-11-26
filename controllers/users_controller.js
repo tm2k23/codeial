@@ -48,6 +48,5 @@ module.exports.create = function(req, res) {
 
 module.exports.createSession = function(req, res) {
     // to start the sign in  session
-    // todo later
-    return res.end('Session created');
+    return res.redirect('/user/profile');
 }
