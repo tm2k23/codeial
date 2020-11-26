@@ -1,4 +1,5 @@
 const { response } = require('express');
+const passport = require('passport');
 const User = require('../models/user.js'); // import the user model
 
 module.exports.profile = function(req, res) {
@@ -9,6 +10,10 @@ module.exports.profile = function(req, res) {
 
 module.exports.signUp = function(req, res) {
     // to render sign up page
+
+    if (req.isAuthenticated()) { // limit this page access when already authenticated
+        return res.redirect('/user/profile');
+    }
     return res.render('user_sign_up.ejs', {
         title: "Sign Up"
     });
@@ -16,6 +21,10 @@ module.exports.signUp = function(req, res) {
 
 module.exports.signIn = function(req, res) {
     // to render sign in page
+
+    if (req.isAuthenticated()) { // limit this page access when already authenticated
+        return res.redirect('/user/profile');
+    }
     return res.render('user_sign_in.ejs', {
         title: "Sign In"
     });

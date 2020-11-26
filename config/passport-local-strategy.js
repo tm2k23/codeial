@@ -64,7 +64,7 @@ passport.deserializeUser(function(id, done) {
 
 // check if the user is autheticated
 passport.checkAuthentication = function(req, res, next) {
-    if (req.isAuthnticated()) { // if user is signed in
+    if (req.isAuthenticated()) { // if user is signed in
         return next(); // pass to next function i.e. controllers action
     }
 
