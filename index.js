@@ -33,6 +33,7 @@ app.use(session({ // middleware for cookie encryption
 // now tell app to use passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
 
 app.use('/', require('./routes/index')); // defining the router
 

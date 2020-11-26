@@ -75,11 +75,12 @@ passport.checkAuthentication = function(req, res, next) {
 
 // set the authenticates user
 passport.setAuthenticatedUser = function(req, res, next) {
-    if (req.isAuthnticated()) {
+    if (req.isAuthenticated()) {
         res.locals.user = req.user;
         // req.user contains the current signedin user from cookies 
         // we are just sending it to locals for views  
     }
+    next();
 }
 
 // now we need to export the passport
