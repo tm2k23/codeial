@@ -1,0 +1,17 @@
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: rgb(71, 71, 179);
+    color: white;
+    font-size: large;
+    position: sticky;
+    top: 0;
+    a {
+        color: white;
+        &:hover {
+            color: yellow;
+        }
+    }
+    padding: 20px;
+}
