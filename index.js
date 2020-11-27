@@ -8,6 +8,7 @@ const session = require('express-session'); // require express session
 const passport = require('passport'); // require passport
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo')(session); // require connecct mongo for session cookies , it takes argument about what to store
+const sassMiddleware = require('node-sass-middleware'); // middleware for sass files to convert to css
 
 //setting up the view engine
 app.set('view engine', 'ejs'); // defining the view engine
@@ -17,6 +18,13 @@ app.set('views', './views'); // setting the views path
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
+app.use(sassMiddleware({ //middleware for sass -> css
+    src: './assets/scss', // path of scss file
+    dest: './assets/css', // destination of scss->css file
+    debug: true, // debug will be false in production mode
+    outputStyle: 'extended', //output style is extended
+    prefix: '/css'
+}))
 app.use(expressLayouts); // middleware for express layouts 
 app.use(express.static('./assets')); // middleware for static files
 app.use(express.urlencoded()); // url parser
