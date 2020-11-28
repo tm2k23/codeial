@@ -3,20 +3,32 @@
     Codeial /
     <%= title %>
 </h1>
-<section id="make-post-section">
-    <form action="/post/create" method="POST">
-        <textarea name="content" id="" cols="30" rows="10"></textarea>
-        <input type="submit" value="POST">
-    </form>
-</section>
-<div>
-    <%for(post of posts){%>
+<%if(locals.user){%>
+    <!-- we have used locals.user and not user(sent by setAuthentictaedUser function defined in the passport config)
+    because ,user can be undefined if no signedin user is there 
+    , bcz, setAuthenticated user will not send "user"to the locals of views
+
+    but locals.user cant be undefined , it can be just null , but it cant be undefined 
+
+    so if we will use user the we will get an error when no use is signed in (try getting that error)
+
+    that error will be "user is not defined" , this error will only be there if no user is signed in 
+    -->
+    <section id="make-post-section">
+        <form action="/post/create" method="POST">
+            <textarea name="content" id="" cols="30" rows="10"></textarea>
+            <input type="submit" value="POST">
+        </form>
+    </section>
+    <%}%>
         <div>
-            <%=post.content%>
-                <P>
-                    <%=post.user.name%>
-                </P>
+            <%for(post of posts){%>
+                <div>
+                    <%=post.content%>
+                        <P>
+                            <%=post.user.name%>
+                        </P>
+                </div>
+                <br>
+                <%}%>
         </div>
-        <br>
-        <%}%>
-</div>
