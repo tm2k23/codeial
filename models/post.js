@@ -9,7 +9,11 @@ const postSchema = new mongoose.Schema({
     user: { // this is for the user  who posted the post
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    comment: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }]
 }, {
     // to store when was the user created and last updates we need to store the timestamps as well
     // this will creat "created at" and "updated at" for each document 
