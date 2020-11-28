@@ -3,6 +3,9 @@ const passport = require('passport');
 const User = require('../models/user.js'); // import the user model
 
 module.exports.profile = function(req, res) {
+    // console.log(req.session);
+    // console.log(req.user);
+
     return res.render('profile.ejs', {
         title: "Profile"
     });

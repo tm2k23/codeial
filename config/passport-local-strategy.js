@@ -11,7 +11,8 @@ const User = require('../models/user');
 
 // for signin
 passport.use(new LocalStrategy({
-        usernameField: 'email' // this is the username field and will be unique for every user  
+        usernameField: 'email', // this is the username field and will be unique for every user  
+        passwordField: 'password' // defining the password field for local strategy
     },
     // defining the callback function which have email password and done in its argument 
     // done is the callback function which reports back to the passport.js
@@ -44,6 +45,7 @@ passport.use(new LocalStrategy({
 // serialise means add key to cookie
 passport.serializeUser(function(user, done) {
     // callback function
+    // console.log(user.id);
     done(null, user.id); // this tells the passport that set user.id as the key in cookie
     // it will be automatically encrypted by the passport
 });
