@@ -19,4 +19,6 @@ router.get('/', homeController.home); // using the controller
 // this is for the route /user , for this route, index router will direct to the users.js router file
 router.use('/user', require('./users'));
 
+router.use('/post', require('./posts'));
+
 module.exports = router; // export will be used in parent index.js file to define router
