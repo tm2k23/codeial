@@ -9,3 +9,14 @@
         <input type="submit" value="POST">
     </form>
 </section>
+<div>
+    <%for(post of posts){%>
+        <div>
+            <%=post.content%>
+                <P>
+                    <%=post.user.name%>
+                </P>
+        </div>
+        <br>
+        <%}%>
+</div>

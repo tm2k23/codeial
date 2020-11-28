@@ -4,18 +4,18 @@ const mongoose = require('mongoose'); // require mongoose
 const userSchema = new mongoose.Schema({
     email: {
         // this is for email
-        type: "string",
+        type: String,
         required: true,
         unique: true // this will make every email ids unique
     },
     password: {
         // this is for password
-        type: "string",
+        type: String,
         required: true
     },
     name: {
         // this is for name of the user 
-        type: "string",
+        type: String,
         required: true
     }
 }, {
@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // tell mongoose that this is a new model or collection
-const user = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 // export it
-module.exports = user;
+module.exports = User;
