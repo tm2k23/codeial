@@ -9,12 +9,20 @@ module.exports.home = function(req, res) {
     //     });
     // });
 
-    Post.find({}).populate('user').exec(function(err, posts) {
-        if (err) { return console.log('error is fetching posts in database ', err); }
-        return res.render('home.ejs', {
-            title: "Home",
-            posts: posts
+    Post.find({})
+        .populate('user')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
         })
-    })
+        .exec(function(err, posts) {
+            if (err) { return console.log('error is fetching posts in database ', err); }
+            return res.render('home.ejs', {
+                title: "Home",
+                posts: posts
+            })
+        })
 
 }

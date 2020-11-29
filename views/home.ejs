@@ -34,6 +34,15 @@
                                         <input type="submit" value="Comment">
                                     </form>
                                     <%}%>
+                                        <ul>
+                                            <%for(comment of post.comments){%>
+                                                <li>
+                                                    <%=comment.content%>
+                                                        <br>
+                                                        <%=comment.user.name%>
+                                                </li>
+                                                <%}%>
+                                        </ul>
                         </P>
                 </div>
                 <br>
