@@ -40,7 +40,7 @@
                                                 <ul>
                                                     <%for(comment of post.comments){%>
                                                         <li>
-                                                            <%if(locals.user && comment.user.id==locals.user.id ){%>
+                                                            <%if(locals.user && (comment.user.id==locals.user.id || post.user.id==locals.user.id) ){%>
                                                                 <a href="/comment/destroy/<%=comment._id%>">x</a>
                                                                 <%}%>
                                                                     <%=comment.content%>

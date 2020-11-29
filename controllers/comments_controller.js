@@ -27,10 +27,14 @@ module.exports.destroy = function(req, res) {
     Comment.findById(req.params.commentIdToDelete, function(err, comment) {
         // console.log('comment is related to the post with ID : ', comment.post);
         // console.log('Owner of the comment is  : ', comment.user);
-        Post.findByIdAndUpdate(comment.post, { $pull: { comments: req.params.commentIdToDelete } }, function(err, post) {
-            // console.log('Owner of the post is : ', post.user);
-            comment.remove();
-            res.redirect('back');
+        Post.findById(comment.post, function(err, post) {
+            if (req.user.id == comment.user || req.user.id == post.user) { //if (req.user.id == comment.user) {
+                Post.findByIdAndUpdate(comment.post, { $pull: { comments: req.params.commentIdToDelete } }, function(err, post) {
+                    // console.log('Owner of the post is : ', post.user);
+                    comment.remove();
+                    res.redirect('back');
+                })
+            }
         })
     })
 }
