@@ -25,7 +25,7 @@
             <%for(post of posts){%>
                 <div style="border: 2px solid black;">
                     <%if(locals.user && post.user.id==locals.user.id ){%>
-                        <a href="/post/delete/<%=post._id%>">x</a>
+                        <a href="/post/destroy/<%=post._id%>">x</a>
                         <%}%>
                             <%=post.content%>
                                 <P>
