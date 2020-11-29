@@ -21,3 +21,16 @@ module.exports.create = function(req, res) {
         }
     })
 }
+
+module.exports.destroy = function(req, res) {
+    // console.log('id of comment to delete : ', req.params.commentIdToDelete);
+    Comment.findById(req.params.commentIdToDelete, function(err, comment) {
+        // console.log('comment is related to the post with ID : ', comment.post);
+        // console.log('Owner of the comment is  : ', comment.user);
+        Post.findByIdAndUpdate(comment.post, { $pull: { comments: req.params.commentIdToDelete } }, function(err, post) {
+            // console.log('Owner of the post is : ', post.user);
+            comment.remove();
+            res.redirect('back');
+        })
+    })
+}

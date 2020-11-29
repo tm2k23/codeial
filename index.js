@@ -21,7 +21,7 @@ app.set('layout extractScripts', true);
 app.use(sassMiddleware({ //middleware for sass -> css
     src: './assets/scss', // path of scss file
     dest: './assets/css', // destination of scss->css file
-    debug: true, // debug will be false in production mode
+    // debug: true, // debug will be false in production mode
     outputStyle: 'extended', //output style is extended
     prefix: '/css'
 }))
