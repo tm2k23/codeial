@@ -48,6 +48,7 @@ module.exports.create = function(req, res) {
 
         if (!user) {
             // if user does not exist
+            console.log(req.body);
             User.create(req.body, function(err, user) {
                 if (err) { console.log('Error in creating new user ', err); }
                 console.log('new user created : ', user); // print the user data on console
@@ -70,4 +71,16 @@ module.exports.destroySession = function(req, res) {
     // for signout 
     req.logout();
     return res.redirect('/');
+}
+
+module.exports.update = function(req, res) {
+    if (req.user.id == req.params.userIdToUpdate) {
+        // console.log(req.body);
+        User.findByIdAndUpdate(req.params.userIdToUpdate, req.body, function(err, user) {
+            // we can also write {name:req.body.name , email:req.body.email} instead of req.body
+            res.redirect('back');
+        })
+    } else {
+        return res.status(401).send('Unauthorized');
+    }
 }
