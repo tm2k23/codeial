@@ -6,7 +6,19 @@
 <p>
     <!-- <%=user.name%>
         <%=user.email%> -->
-    <%=profileToView.name%>
-        <%=profileToView.email%>
+    <h2>
+        <%=profileToView.name%>
+    </h2>
+
+    <%=profileToView.email%>
 
 </p>
+
+<% if(profileToView.id == locals.user.id){ %>
+    <h1>Update you profile here</h1>
+    <form action="/user/update/<%=profileToView.id %>" method="GET">
+        <input type="text" value="<%=profileToView.name %>" name="name">
+        <input type="email" value="<%=profileToView.email %>" name="email">
+        <input type="submit" value="Update">
+    </form>
+    <% } %>
