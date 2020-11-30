@@ -19,10 +19,14 @@ module.exports.home = function(req, res) {
         })
         .exec(function(err, posts) {
             if (err) { return console.log('error is fetching posts in database ', err); }
-            return res.render('home.ejs', {
-                title: "Home",
-                posts: posts
+            User.find({}, function(err, users) {
+                return res.render('home.ejs', {
+                    title: "Home",
+                    posts: posts,
+                    users: users
+                })
             })
+
         })
 
 }

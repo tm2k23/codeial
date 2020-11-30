@@ -5,17 +5,20 @@ const User = require('../models/user.js'); // import the user model
 module.exports.profile = function(req, res) {
     // console.log(req.session);
     // console.log(req.user);
+    User.findById(req.params.profileIdToView, function(err, user) {
+        return res.render('profile.ejs', {
+            title: "Profile",
+            profileToView: user
+        });
+    })
 
-    return res.render('profile.ejs', {
-        title: "Profile"
-    });
 }
 
 module.exports.signUp = function(req, res) {
     // to render sign up page
 
     if (req.isAuthenticated()) { // limit this page access when already authenticated
-        return res.redirect('/user/profile');
+        return res.redirect('/user/profile/' + req.user.id);
     }
     return res.render('user_sign_up.ejs', {
         title: "Sign Up"
@@ -26,7 +29,7 @@ module.exports.signIn = function(req, res) {
     // to render sign in page
 
     if (req.isAuthenticated()) { // limit this page access when already authenticated
-        return res.redirect('/user/profile');
+        return res.redirect('/user/profile/' + req.user.id);
     }
     return res.render('user_sign_in.ejs', {
         title: "Sign In"
@@ -60,7 +63,7 @@ module.exports.create = function(req, res) {
 
 module.exports.createSession = function(req, res) {
     // to start the sign in  session
-    return res.redirect('/user/profile');
+    return res.redirect('/user/profile/' + req.user.id);
 }
 
 module.exports.destroySession = function(req, res) {

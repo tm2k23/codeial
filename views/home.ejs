@@ -3,8 +3,10 @@
     Codeial /
     <%= title %>
 </h1>
-<%if(locals.user){%>
-    <!-- we have used locals.user and not user(sent by setAuthentictaedUser function defined in the passport config)
+<section style="display: inline-block; width: 60%; border:2px solid blue">
+    <h1>Posts</h1>
+    <%if(locals.user){%>
+        <!-- we have used locals.user and not user(sent by setAuthentictaedUser function defined in the passport config)
     because ,user can be undefined if no signedin user is there 
     , bcz, setAuthenticated user will not send "user"to the locals of views
 
@@ -14,43 +16,28 @@
 
     that error will be "user is not defined" , this error will only be there if no user is signed in 
     -->
-    <section id="make-post-section">
-        <form action="/post/create" method="POST">
-            <textarea name="content" id="" cols="30" rows="2"></textarea>
-            <input type="submit" value="POST">
-        </form>
-    </section>
-    <%}%>
-        <div>
-            <%for(post of posts){%>
-                <div style="border: 2px solid black;">
-                    <%if(locals.user && post.user.id==locals.user.id ){%>
-                        <a href="/post/destroy/<%=post._id%>">x</a>
+        <section id="make-post-section">
+            <form action="/post/create" method="POST">
+                <textarea name="content" id="" cols="30" rows="2"></textarea>
+                <input type="submit" value="POST">
+            </form>
+        </section>
+        <%}%>
+            <div>
+                <%for(post of posts){%>
+                    <%- include('_post') -%>
                         <%}%>
-                            <%=post.content%>
-                                <P>
-                                    <%=post.user.name%>
-                                        <%if(locals.user){%>
-                                            <form action="/comment/create" method="POST">
-                                                <input type="text" name=content>
-                                                <input type="hidden" name="post" value="<%=post._id%>">
-                                                <input type="submit" value="Comment">
-                                            </form>
-                                            <%}%>
-                                                <ul>
-                                                    <%for(comment of post.comments){%>
-                                                        <li>
-                                                            <%if(locals.user && (comment.user.id==locals.user.id || post.user.id==locals.user.id) ){%>
-                                                                <a href="/comment/destroy/<%=comment._id%>">x</a>
-                                                                <%}%>
-                                                                    <%=comment.content%>
-                                                                        <br>
-                                                                        <%=comment.user.name%>
-                                                        </li>
-                                                        <%}%>
-                                                </ul>
-                                </P>
-                </div>
-                <br>
-                <%}%>
-        </div>
+            </div>
+</section>
+<section style="display: inline-block; width: 20%; border:2px solid blue;vertical-align: top;">
+    <h1>Users</h1>
+    <ul>
+        <%for(codeial_user of users){%>
+            <li>
+                <a href="/user/profile/<%=codeial_user._id%>">
+                    <%=codeial_user.name%>
+                </a>
+            </li>
+            <%}%>
+    </ul>
+</section>
