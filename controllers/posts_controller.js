@@ -10,7 +10,9 @@ module.exports.create = function(req, res) {
     }, function(err, post) {
         if (err) {
             console.log('error is adding post to the database');
+            req.flash('error', err);
         }
+        req.flash('success', 'Posted Successfully');
         return res.redirect('back');
     });
 }
@@ -58,12 +60,16 @@ module.exports.destroy = async function(req, res) {
         if (post) {
             await Comment.deleteMany({ post: req.params.postIdToDelete }, function(err) {
                 post.remove();
+                req.flash('success', 'Post and associated Comments deleted successfully');
                 return res.redirect('back');
             })
         } else {
+            req.flash('error', 'You cannot delete this post');
             return res.redirect('back');
         }
     } catch (err) {
         console.log('error : ', err);
+        req.flash('error', err);
+        return res.redirect('back');
     }
 }
