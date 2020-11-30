@@ -1,6 +1,8 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 const { post } = require('../routes/posts');
+
+//create controller without using async await
 module.exports.create = function(req, res) {
     Post.create({
         content: req.body.content,
@@ -27,6 +29,7 @@ module.exports.create = async function(req, res) {
     }
 } */
 
+// post destroy controller without async await
 /*module.exports.destroy = function(req, res) {
     // console.log('Request Params : ', req.params);
     // first look if the post in the database esists or not 
