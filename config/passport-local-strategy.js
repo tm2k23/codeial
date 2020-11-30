@@ -12,22 +12,24 @@ const User = require('../models/user');
 // for signin
 passport.use(new LocalStrategy({
         usernameField: 'email', // this is the username field and will be unique for every user  
-        passwordField: 'password' // defining the password field for local strategy
+        passwordField: 'password', // defining the password field for local strategy
+        passReqToCallback: true // used to pass request to callback, used to put req.flash so that middleware can pass it to locals
     },
     // defining the callback function which have email password and done in its argument 
     // done is the callback function which reports back to the passport.js
-    function(email, password, done) {
+    function(req, email, password, done) {
         // find the user and establish the identity
         User.findOne({ email: email }, function(err, user) {
 
             if (err) { // if errror in finding the user 
                 console.log('Error in finding user -> passport');
+                req.flash('error', err);
                 return done(err); //  this statemtn will report the error to passport
             }
 
             // if user not found or password does not match
             if (!user || user.password != password) {
-                console.log('Invalid username / password');
+                req.flash('error', 'Username or Password Incorrect');
                 // done is the callback function which reports back to the passport.js
                 return done(err, false); // done function accepts 2 arguments 
                 // here false tells the passport that authentication is not done 

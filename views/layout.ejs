@@ -35,6 +35,15 @@
                         timeout: 1500
                     }).show();
                     <%}%>
+                    <% if(locals.flash.error && locals.flash.error.length>0){ %>
+                    new Noty({
+                        theme: 'relax',
+                        layout: 'topRight',
+                        text: '<%=locals.flash.error%>',
+                        type: 'success ',
+                        timeout: 1500
+                    }).show();
+                    <%}%>
                 </script>
 
 </body>
