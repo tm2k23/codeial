@@ -35,10 +35,12 @@ module.exports.create = async function(req, res) {
             });
             post.comments.push(comment);
             post.save();
+            req.flash('success', 'Comment added Successfully');
             res.redirect('/');
         }
     } catch (err) {
-        console.log('error : ', err);
+        req.flash('error', err);
+        return res.redirect('back');
     }
 }
 
@@ -68,9 +70,15 @@ module.exports.destroy = async function(req, res) {
         if (req.user.id == comment.user || req.user.id == post.user) {
             await Post.findByIdAndUpdate(comment.post, { $pull: { comments: req.params.commentIdToDelete } });
             comment.remove();
+            req.flash('success', 'Comment deleted Successfully');
+            res.redirect('back');
+        } else {
+            req.flash('error', 'You cant delete this comment');
             res.redirect('back');
         }
     } catch (err) {
         console.log('error', err);
+        req.flash('error', err);
+        return res.redirect('back');
     }
 }
