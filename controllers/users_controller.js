@@ -5,13 +5,14 @@ const User = require('../models/user.js'); // import the user model
 module.exports.profile = function(req, res) {
     // console.log(req.session);
     // console.log(req.user);
+    // console.log('request came to display the profile page');
     User.findById(req.params.profileIdToView, function(err, user) {
+        // console.log('Going to render the profile page');
         return res.render('profile.ejs', {
             title: "Profile",
             profileToView: user
         });
     })
-
 }
 
 module.exports.signUp = function(req, res) {
@@ -64,12 +65,16 @@ module.exports.create = function(req, res) {
 
 module.exports.createSession = function(req, res) {
     // to start the sign in  session
+    // console.log('Request came to sign in');
+    req.flash('success', 'Logged in successfully');
+    // console.log('Flash message is set inside the controller');
     return res.redirect('/user/profile/' + req.user.id);
 }
 
 module.exports.destroySession = function(req, res) {
     // for signout 
     req.logout();
+    req.flash('success', 'Logged out successfully');
     return res.redirect('/');
 }
 

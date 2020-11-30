@@ -9,6 +9,8 @@ const passport = require('passport'); // require passport
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo')(session); // require connecct mongo for session cookies , it takes argument about what to store
 const sassMiddleware = require('node-sass-middleware'); // middleware for sass files to convert to css
+const flash = require('connect-flash');
+const customMware = require('./config/middleware');
 
 //setting up the view engine
 app.set('view engine', 'ejs'); // defining the view engine
@@ -50,6 +52,8 @@ app.use(session({ // middleware for cookie encryption
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+app.use(flash());
+app.use(customMware.setFlash);
 
 app.use('/', require('./routes/index')); // defining the router
 
