@@ -17,13 +17,14 @@
     that error will be "user is not defined" , this error will only be there if no user is signed in 
     -->
         <section id="make-post-section">
-            <form action="/post/create" method="POST">
+            <form action="/post/create" method="POST" id="new-post-form">
                 <textarea name="content" id="" cols="30" rows="2"></textarea>
                 <input type="submit" value="POST">
             </form>
         </section>
         <%}%>
-            <div>
+            <div id="post-section">
+
                 <%for(post of posts){%>
                     <%- include('_post') -%>
                         <%}%>

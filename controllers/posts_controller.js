@@ -12,6 +12,14 @@ module.exports.create = function(req, res) {
             console.log('error is adding post to the database');
             req.flash('error', err);
         }
+        if (req.xhr) {
+            return res.status(200).json({
+                data: {
+                    post: post
+                },
+                message: "Post Created"
+            });
+        }
         req.flash('success', 'Posted Successfully');
         return res.redirect('back');
     });

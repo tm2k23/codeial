@@ -83,9 +83,11 @@ module.exports.update = function(req, res) {
         // console.log(req.body);
         User.findByIdAndUpdate(req.params.userIdToUpdate, req.body, function(err, user) {
             // we can also write {name:req.body.name , email:req.body.email} instead of req.body
+            req.flash('success', 'Profile updated Successfully');
             res.redirect('back');
         })
     } else {
-        return res.status(401).send('Unauthorized');
+        req.flash('failure', 'Unauthorized');
+        return res.redirect('back');
     }
 }
