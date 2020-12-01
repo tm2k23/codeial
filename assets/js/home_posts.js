@@ -13,6 +13,7 @@ console.log('home_posts.js Javascript file loaded');
                 success: function(data) {
                     console.log(data.data.post);
                     $('#post-section').prepend(newPostDom(data.data.post));
+                    deletePost('.post-delete-button', newPostDom(data.data.post));
                 },
                 error: function(error) { console.log(error.responseText); }
             })
@@ -21,7 +22,7 @@ console.log('home_posts.js Javascript file loaded');
         let newPostDom = function(post) {
             console.log(post);
             return $(`<div style="border: 2px solid black;" id="${post._id}">
-                <a class="post-delete-button" href="/post/destroy/<%=post._id%>">x</a>
+                <a class="post-delete-button" href="/post/destroy/${post._id}">x</a>
             
                 ${post.content}
                     <P>
@@ -40,7 +41,19 @@ console.log('home_posts.js Javascript file loaded');
         }
     }
 
-
+    let deletePost = function(deleteLink) {
+        $(deleteLink).click(function(event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'get',
+                url: $(deleteLink).prop('href'),
+                success: function(data) {
+                    $('#' + data.data.post_id).remove();
+                },
+                error: function(err) { console.log(err); }
+            })
+        })
+    }
 
 
     createPost();
