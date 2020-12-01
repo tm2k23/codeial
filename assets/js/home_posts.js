@@ -13,6 +13,7 @@ console.log('home_posts.js Javascript file loaded');
                 success: function(data) {
                     console.log(data.data.post);
                     $('#post-section').prepend(newPostDom(data.data.post));
+                    showNoty('Posted Successfully');
                     deletePost('.post-delete-button', newPostDom(data.data.post));
                 },
                 error: function(error) { console.log(error.responseText); }
@@ -49,12 +50,22 @@ console.log('home_posts.js Javascript file loaded');
                 url: $(deleteLink).prop('href'),
                 success: function(data) {
                     $('#' + data.data.post_id).remove();
+                    showNoty('Posted Deleted Successfully');
                 },
                 error: function(err) { console.log(err); }
             })
         })
     }
 
-
     createPost();
+
+    // add event listers of deletePost to deletebutton of every post
+    let addListerToAllPostDeeleteButton = function() {
+        let deleteButtonOfAllPosts = $('#post-section>div>a')
+            // console.log(deleteButtonOfAllPosts);
+        for (deleteButton of deleteButtonOfAllPosts) {
+            // console.log(deleteLink.href);
+            deletePost(deleteButton);
+        }
+    }();
 }
