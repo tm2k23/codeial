@@ -35,7 +35,7 @@ console.log('home_posts.js Javascript file loaded');
                                     <input type="hidden" name="post" value="${post._id}">
                                     <input type="submit" value="Comment">
                                 </form>
-                                    <ul>
+                                    <ul class="comment-container">
                                     </ul>
                     </P>
                 </div>
