@@ -6,7 +6,7 @@
                 <P>
                     <%=post.user.name%>
                         <%if(locals.user){%>
-                            <form action="/comment/create" method="POST">
+                            <form class="comment-form" action="/comment/create" method="POST">
                                 <input type="text" name=content>
                                 <input type="hidden" name="post" value="<%=post._id%>">
                                 <input type="submit" value="Comment">

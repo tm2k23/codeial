@@ -26,6 +26,8 @@ module.exports.create = function(req, res) {
 // comment create controller with async await
 module.exports.create = async function(req, res) {
     try {
+        // console.log('request came');
+        // console.log(req.body);
         let post = await Post.findById(req.body.post);
         if (post) {
             let comment = await Comment.create({
@@ -35,6 +37,16 @@ module.exports.create = async function(req, res) {
             });
             post.comments.push(comment);
             post.save();
+            if (req.xhr) {
+                // console.log('its a xhr request');
+                // console.log(comment);
+                return res.status(200).json({
+                    data: {
+                        comment: comment
+                    },
+                    message: "Comment Added Successfully"
+                });
+            }
             req.flash('success', 'Comment added Successfully');
             res.redirect('/');
         }

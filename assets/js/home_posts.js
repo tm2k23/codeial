@@ -11,8 +11,10 @@ console.log('home_posts.js Javascript file loaded');
                 url: '/post/create',
                 data: newPostForm.serialize(),
                 success: function(data) {
-                    console.log(data.data.post);
+                    // console.log(data.data.post);
                     $('#post-section').prepend(newPostDom(data.data.post));
+                    // console.log(data.data.post._id);
+                    new PostComments(data.data.post._id);
                     showNoty('Posted Successfully');
                     deletePost('.post-delete-button', newPostDom(data.data.post));
                 },
@@ -21,16 +23,16 @@ console.log('home_posts.js Javascript file loaded');
         });
 
         let newPostDom = function(post) {
-            console.log(post);
+            // console.log(post);
             return $(`<div style="border: 2px solid black;" id="${post._id}">
                 <a class="post-delete-button" href="/post/destroy/${post._id}">x</a>
             
                 ${post.content}
                     <P>
                     ${post.user.name}
-                                <form action="/comment/create" method="POST">
+                                <form class="comment-form" action="/comment/create" method="POST">
                                     <input type="text" name=content>
-                                    <input type="hidden" name="post" value=" ${post._id}">
+                                    <input type="hidden" name="post" value="${post._id}">
                                     <input type="submit" value="Comment">
                                 </form>
                                     <ul>

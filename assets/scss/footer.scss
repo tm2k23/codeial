@@ -2,8 +2,9 @@ footer {
     height: 100px;
     background-color: grey;
     font-size: large;
-    position: sticky;
+    position: fixed;
     bottom: 0;
+    width: 100%;
     a {
         color: white;
     }
