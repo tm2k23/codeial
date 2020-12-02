@@ -11,6 +11,7 @@ const MongoStore = require('connect-mongo')(session); // require connecct mongo 
 const sassMiddleware = require('node-sass-middleware'); // middleware for sass files to convert to css
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
+const multer = require('multer'); // require multer for file upload 
 
 //setting up the view engine
 app.set('view engine', 'ejs'); // defining the view engine
