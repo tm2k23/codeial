@@ -7,12 +7,14 @@ module.exports.create = function(req, res) {
     Post.create({
         content: req.body.content,
         user: req.user._id
-    }, function(err, post) {
+    }, async function(err, post) {
         if (err) {
             console.log('error is adding post to the database');
             req.flash('error', err);
         }
         if (req.xhr) {
+            await post.populate('user', 'name').execPopulate();
+            // console.log(post);
             return res.status(200).json({
                 data: {
                     post: post

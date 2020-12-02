@@ -40,6 +40,8 @@ module.exports.create = async function(req, res) {
             if (req.xhr) {
                 // console.log('its a xhr request');
                 // console.log(comment);
+                await comment.populate('user', 'name').execPopulate();
+                // console.log(comment);
                 return res.status(200).json({
                     data: {
                         comment: comment
