@@ -38,13 +38,15 @@ console.log('home_posts.js Javascript file loaded');
                                     <ul class="comment-container">
                                     </ul>
                     </P>
+                    <br>  
                 </div>
-                <br>   
+                 
             `)
         }
     }
 
     let deletePost = function(deleteLink) {
+        // console.log(deleteLink);
         $(deleteLink).click(function(event) {
             event.preventDefault();
             $.ajax({
@@ -52,7 +54,7 @@ console.log('home_posts.js Javascript file loaded');
                 url: $(deleteLink).prop('href'),
                 success: function(data) {
                     $('#' + data.data.post_id).remove();
-                    showNoty('Posted Deleted Successfully');
+                    showNoty('Post and Associated Comments Deleted Successfully');
                 },
                 error: function(err) { console.log(err); }
             })
@@ -62,12 +64,15 @@ console.log('home_posts.js Javascript file loaded');
     createPost();
 
     // add event listers of deletePost to deletebutton of every post
-    let addListerToAllPostDeeleteButton = function() {
-        let deleteButtonOfAllPosts = $('#post-section>div>a')
-            // console.log(deleteButtonOfAllPosts);
-        for (deleteButton of deleteButtonOfAllPosts) {
-            // console.log(deleteLink.href);
-            deletePost(deleteButton);
+    let addAJAXToAllPosts = function() {
+        let allPosts = $('#post-section>div');
+        // console.log(allPosts);
+        for (post of allPosts) {
+            // console.log(post);
+            // console.log($('.post-delete-button', post));
+            deletePost($('.post-delete-button', post));
+            // console.log(post.getAttribute('id'));
+            new PostComments(post.getAttribute('id'));
         }
     }();
 }

@@ -2,7 +2,13 @@ console.log('home post comment javascript file loaded');
 
 class PostComments {
     constructor(postId) {
-        this.createComment(postId)
+        this.createComment(postId);
+        let commentDeletLinks = $(`#${postId} .comment-delete-button`);
+        // console.log(commentDeletLinks);
+        for (let commentDeletLink of commentDeletLinks) {
+            // console.log(commentDeletLink);
+            this.deleteComment(commentDeletLink);
+        }
     }
 
     createComment(postId) {
@@ -19,8 +25,13 @@ class PostComments {
                 data: commentForm.serialize(),
                 success: function(data) {
                     // console.log('comment added successfully to the database ', data);
-                    $('#' + postId + ' .comment-container').prepend(postThis.newCommentDom(data.data.comment));
+                    let commentDom = postThis.newCommentDom(data.data.comment);
+                    console.log(commentDom);
+                    $('#' + postId + ' .comment-container').prepend(commentDom);
+                    showNoty('Comment Added Successfully');
                     // console.log(postThis.newCommentDom(data.data.comment));
+                    // postThis.deleteComment(postId);
+                    postThis.deleteComment($('.comment-delete-button', commentDom));
                 },
                 error: function(error) {
                     console.log(error);
@@ -34,7 +45,7 @@ class PostComments {
         // console.log(comment);
         return $(`
             <li id="${comment._id}">
-                    <a href="/comment/destroy/${comment._id}">x</a>
+                    <a class="comment-delete-button" href="/comment/destroy/${comment._id}">x</a>
                 
                     ${comment.content}
                         <br>
@@ -43,4 +54,23 @@ class PostComments {
         `);
     }
 
+
+    deleteComment(deleteLink) {
+        // console.log(deleteLink);
+
+        $(deleteLink).click(function(event) {
+            event.preventDefault();
+            // console.log($(deleteLink)[0].getAttribute('href'));
+            // console.log('default behaviour preveneted');
+            $.ajax({
+                type: 'get',
+                url: $(deleteLink)[0].getAttribute('href'), // or $(deleteLink).prop('href');
+                success: function(data) {
+                    $(`#${data.data.comment_id}`).remove();
+                    showNoty('Comment Deleted Successfully');
+                    // console.log(data);
+                }
+            })
+        })
+    }
 }
