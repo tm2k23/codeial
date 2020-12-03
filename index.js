@@ -12,7 +12,8 @@ const sassMiddleware = require('node-sass-middleware'); // middleware for sass f
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 const multer = require('multer'); // require multer for file upload 
-
+const passportJWT = require('./config/passport-jwt-strategy');
+const jwt = require('jsonwebtoken');
 
 app.use('/uploads', express.static(__dirname + '/uploads'));
 

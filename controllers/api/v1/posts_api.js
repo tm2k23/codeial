@@ -19,23 +19,24 @@ module.exports.index = async function(req, res) {
 
 module.exports.destroy = async function(req, res) {
     try {
+        // console.log('destroying with api********************************');
         let post = await Post.findById(req.params.postIdToDelete);
-        if (post) {
+
+        if (post.user == req.user.id) {
+            // console.log('authorized with api********************************');
             await Comment.deleteMany({ post: req.params.postIdToDelete }, function(err) {
                 post.remove();
-                if (req.xhr) {
-                    return res.status(200).json({
+                return res.status(200).json({
                         data: {
                             post_id: post._id
                         },
                         message: "Post Deleted Successfully"
                     })
-                }
-                // req.flash('success', 'Post and associated Comments deleted successfully');
-                // return res.redirect('back');
+                    // req.flash('success', 'Post and associated Comments deleted successfully');
+                    // return res.redirect('back');
             })
         } else {
-            return res.status(500).json({
+            return res.status(401).json({
                     message: "You cannot delete this post"
                 })
                 // req.flash('error', 'You cannot delete this post');
