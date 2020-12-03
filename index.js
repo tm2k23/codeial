@@ -13,6 +13,9 @@ const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 const multer = require('multer'); // require multer for file upload 
 
+
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
 //setting up the view engine
 app.set('view engine', 'ejs'); // defining the view engine
 app.set('views', './views'); // setting the views path
