@@ -17,9 +17,10 @@
 <% if(profileToView.id == locals.user.id){ %>
     <h1>Update you profile here</h1>
     <!-- <form action="/user/update/<%=profileToView.id%>" method="GET"> -->
-    <form action="/user/update/<%=profileToView.id%>" method="POST">
+    <form action="/user/update/<%=profileToView.id%>" enctype="multipart/form-data" method="POST">
         <input type=" text " value="<%=profileToView.name%>" name="name" required>
         <input type="email" value="<%=profileToView.email%>" name="email" required>
+        <input type="file" name="avatar" id="" placeholder="Upload Avatar">
         <input type="submit" value="Update">
     </form>
     <% } %>

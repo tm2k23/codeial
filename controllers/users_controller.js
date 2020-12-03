@@ -78,14 +78,34 @@ module.exports.destroySession = function(req, res) {
     return res.redirect('/');
 }
 
-module.exports.update = function(req, res) {
+module.exports.update = async function(req, res) {
+    // if (req.user.id == req.params.userIdToUpdate) {
+    //     // console.log(req.body);
+    //     User.findByIdAndUpdate(req.params.userIdToUpdate, req.body, function(err, user) {
+    //         // we can also write {name:req.body.name , email:req.body.email} instead of req.body
+    //         req.flash('success', 'Profile updated Successfully');
+    //         res.redirect('back');
+    //     })
+    // } else {
+    //     req.flash('failure', 'Unauthorized');
+    //     return res.redirect('back');
+    // }
     if (req.user.id == req.params.userIdToUpdate) {
-        // console.log(req.body);
-        User.findByIdAndUpdate(req.params.userIdToUpdate, req.body, function(err, user) {
-            // we can also write {name:req.body.name , email:req.body.email} instead of req.body
-            req.flash('success', 'Profile updated Successfully');
-            res.redirect('back');
-        })
+        try {
+            let user = await User.findById(req.params.userIdToUpdate);
+            User.uploadedAvatar(req, res, function(err) {
+                if (err) { console.log('multer error ********************* '); }
+                // console.log(req.file);
+                // console.log(req.body);
+                user.name = req.body.name;
+                user.email = req.body.email;
+                if (req.file) {
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+            })
+        } catch (err) { console.log(err); }
     } else {
         req.flash('failure', 'Unauthorized');
         return res.redirect('back');
