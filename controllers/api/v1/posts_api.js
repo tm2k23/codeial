@@ -1,4 +1,5 @@
 const Post = require('../../../models/post');
+const Comment = require('../../../models/comment');
 
 module.exports.index = async function(req, res) {
     let posts = await Post.find({})
@@ -14,4 +15,35 @@ module.exports.index = async function(req, res) {
         message: "List of posts V1 Api",
         posts: posts
     })
+}
+
+module.exports.destroy = async function(req, res) {
+    try {
+        let post = await Post.findById(req.params.postIdToDelete);
+        if (post) {
+            await Comment.deleteMany({ post: req.params.postIdToDelete }, function(err) {
+                post.remove();
+                if (req.xhr) {
+                    return res.status(200).json({
+                        data: {
+                            post_id: post._id
+                        },
+                        message: "Post Deleted Successfully"
+                    })
+                }
+                // req.flash('success', 'Post and associated Comments deleted successfully');
+                // return res.redirect('back');
+            })
+        } else {
+            return res.status(500).json({
+                    message: "You cannot delete this post"
+                })
+                // req.flash('error', 'You cannot delete this post');
+                // return res.redirect('back');
+        }
+    } catch (err) {
+        console.log('error : ', err);
+        // req.flash('error', err);
+        // return res.redirect('back');
+    }
 }
