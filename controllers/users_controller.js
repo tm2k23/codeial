@@ -1,7 +1,8 @@
 const { response } = require('express');
 const passport = require('passport');
 const User = require('../models/user.js'); // import the user model
-
+const path = require('path');
+const fs = require('fs');
 module.exports.profile = function(req, res) {
     // console.log(req.session);
     // console.log(req.user);
@@ -100,6 +101,9 @@ module.exports.update = async function(req, res) {
                 user.name = req.body.name;
                 user.email = req.body.email;
                 if (req.file) {
+                    if (user.avatar) {
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                    }
                     user.avatar = User.avatarPath + '/' + req.file.filename;
                 }
                 user.save();
