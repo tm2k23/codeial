@@ -19,7 +19,8 @@ router.get('/sign-in', usersController.signIn); // for sign in page
 router.post('/create', usersController.create); // for adding user to the database action route of signup form
 router.get('/sign-out', usersController.destroySession); // for ending the session of the loggedin user
 router.post('/update/:userIdToUpdate', usersController.update); // see what will happen if we use get for this route
-
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/user/sign-in' }), usersController.createSession);
 // action route for sign in form 
 // authenticate using passport-local strategy
 // if failure , redirect else go to controller

@@ -14,6 +14,8 @@ const customMware = require('./config/middleware');
 const multer = require('multer'); // require multer for file upload 
 const passportJWT = require('./config/passport-jwt-strategy');
 const jwt = require('jsonwebtoken');
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
+
 
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
