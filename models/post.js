@@ -13,6 +13,10 @@ const postSchema = new mongoose.Schema({
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
+    }],
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Like'
     }]
 }, {
     // to store when was the user created and last updates we need to store the timestamps as well
