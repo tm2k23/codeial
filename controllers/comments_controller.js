@@ -1,6 +1,8 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 const commentsMailer = require('../mailers/comments_mailer');
+const queue = require('../config/kue');
+const commentEmailWoker = require('../worker/comment_email_worker');
 /*comment create contoller without async await 
 module.exports.create = function(req, res) {
     // console.log('comment request body is', req.body);
@@ -39,6 +41,11 @@ module.exports.create = async function(req, res) {
             post.save();
             await comment.populate('user', 'name email').execPopulate();
             commentsMailer.newComment(comment);
+            // let job = queue.create('emails', comment).save(function(err) {
+            //     if (err) { console.log('error in creating the queue', err); return; };
+            //     console.log('job enqueued');
+            //     console.log(job.id);
+            // })
             if (req.xhr) {
                 // console.log('its a xhr request');
                 // console.log(comment);
