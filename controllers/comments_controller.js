@@ -1,7 +1,7 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 const commentsMailer = require('../mailers/comments_mailer');
-const queue = require('../config/kue');
+// const queue = require('../config/kue');
 const commentEmailWoker = require('../worker/comment_email_worker');
 /*comment create contoller without async await 
 module.exports.create = function(req, res) {
